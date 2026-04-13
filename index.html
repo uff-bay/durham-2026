@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RSVP</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero card">
+        <p class="eyebrow"><a href="https://www.urbanforestfriends.org" target="_blank" rel="noopener">Urban Forest Friends</a></p>
+        <a href="https://www.urbanforestfriends.org" target="_blank" rel="noopener">
+        <img 
+      	    src="uffLogo.png" 
+      	    alt="Urban Forest Friends" 
+      	    class="hero-image"
+      	/>
+        </a>
+        <h1 id="eventTitle">Earth Day Tree Planting</h1>
+        <p id="eventMeta" class="muted">Mirabeau Park, Newark, CA on April 25, 2026, 8:30am to 12pm</p>
+        <div id="statusBanner" class="status-banner">RSVP to plant trees with us!</div>
+      </section>
+
+      <section class="card">
+        <h2>Important!</h2>
+        <p>
+          To participate, you (or, if you are below the age of 18, your guardian) will need to sign both waiver forms.
+        </p>
+        <ol>
+          <li><a id="waiverA" href="https://docs.google.com/document/d/1sXZhdfVdP9XuHrxpnfPpmX7cc_7qufwyuFZ9bzW3b0Y/view?tab=t.0" target="_blank" rel="noopener">City of Newark Waiver Form</a></li>
+          <li><a id="waiverB" href="https://drive.google.com/file/u/1/d/1a65lmS7rAJBmiO2hR0xzdyUoIWDTKkAq/view" target="_blank" rel="noopener">UFF Waiver Form</a></li>
+        </ol>
+        <p>
+          You can submit the forms in either of these ways:
+        </p>
+        <ol>
+          <li>Print them out and bring them to the event.</li>
+          <li>Email signed or scanned copies directly to the coordinator at <a id="coordinatorEmail" href="mailto:man@urbanforestfriends.org">man@urbanforestfriends.org</a>.</li>
+        </ol>
+        <p>
+          A family member or friend also wants to attend? They would need to submit a RSVP form as well! One RSVP per person, please!
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>RSVP form</h2>
+        <form id="rsvpForm" method="post">
+          <input type="hidden" name="action" value="submit">
+          <div class="honeypot" aria-hidden="true">
+            <label>
+              Website
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </label>
+          </div>
+
+          <div class="grid two-up">
+            <label>
+              First name *
+              <input type="text" name="first_name" required>
+            </label>
+            <label>
+              Last name *
+              <input type="text" name="last_name" required>
+            </label>
+          </div>
+
+          <div class="grid two-up">
+            <label>
+              Non-school email address *
+              <input type="email" name="email" required>
+            </label>
+            <label>
+              Confirm your email address *
+              <input type="email" name="email_confirm" required>
+            </label>
+          </div>
+
+          <fieldset>
+            <legend>I am a… *</legend>
+            <label class="choice"><input type="radio" name="participant_type" value="Student" required> Student (age 14+)</label>
+            <label class="choice"><input type="radio" name="participant_type" value="Adult" required> Adult</label>
+          </fieldset>
+
+          <label>
+            Organization / School
+            <input type="text" name="organization_school">
+          </label>
+
+          <fieldset>
+            <legend>Do you have previous tree-planting experience? *</legend>
+            <p class="help">None needed. This just helps the organizer plan.</p>
+            <label class="choice"><input type="radio" name="tree_experience" value="Lots" required> Yes, a lot</label>
+            <label class="choice"><input type="radio" name="tree_experience" value="Some" required> Yes, a little</label>
+            <label class="choice"><input type="radio" name="tree_experience" value="None" required> No</label>
+          </fieldset>
+
+          <fieldset>
+            <legend>How would you like to submit the waiver forms? *</legend>
+            <label class="choice"><input type="radio" name="waiver_submission" value="willBring" required> I will print them out physically and bring them to the event</label>
+            <label class="choice"><input type="radio" name="waiver_submission" value="electronic" required> I will sign them digitally (or scan a copy) and send them to organizer at man@urbanforestfriends.org</label>
+            <label class="choice"><input type="radio" name="waiver_submission" value="noNeed" required> I have previous attended an UFF tree planting at Newark and have signed both forms in the calendar year of 2026. I do not need to sign again</label>
+          </fieldset>
+
+          <label>
+            How did you hear about this event?
+            <input type="text" name="heard_about">
+          </label>
+
+          <label>
+            Comments / questions / concerns
+            <textarea name="comments" rows="5"></textarea>
+          </label>
+
+          <p class="help">
+            After you submit, you’ll be taken to a confirmation page. You will also receive an email with a self-cancel link.
+          </p>
+          
+          <div id="formMessage" class="form-message" role="alert" aria-live="polite"></div>
+          <button id="submitButton" type="submit">Submit RSVP</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
