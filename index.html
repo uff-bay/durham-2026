@@ -11,25 +11,28 @@
       <section class="hero card">
         <p class="eyebrow"><a href="https://www.urbanforestfriends.org" target="_blank" rel="noopener">Urban Forest Friends</a></p>
         <a href="https://www.urbanforestfriends.org" target="_blank" rel="noopener">
-        <img 
-      	    src="uffLogo.png" 
-      	    alt="Urban Forest Friends" 
-      	    class="hero-image"
-      	/>
+          <img src="uffLogo.png" alt="Urban Forest Friends" class="hero-image">
         </a>
-        <h1 id="eventTitle">Earth Day Tree Planting</h1>
-        <p id="eventMeta" class="muted">Mirabeau Park, Newark, CA on April 25, 2026, 8:30am to 12pm</p>
+        <h1 id="eventTitle">Durham Elementary Tree Planting</h1>
+        <p id="eventMeta" class="muted">Saturday, May 9, 2026 · 9:00 AM to 12:00 PM • Durham Elementary, Newark, CA</p>
         <div id="statusBanner" class="status-banner">RSVP to plant trees with us!</div>
       </section>
 
       <section class="card">
-        <h2>Important!</h2>
+        <h2>Important</h2>
         <p>
-          To participate, you (or, if you are below the age of 18, your guardian) will need to sign both waiver forms.
+          We are prioritizing Durham Elementary school families first. A school-family RSVP covers
+          <strong>exactly one student and one parent or guardian</strong>. General-public RSVP can be opened later if space remains.
+        </p>
+        <p id="registrationModeNotice" class="notice-box notice-info">
+          School families are being prioritized right now.
+        </p>
+        <p>
+          To participate, you must complete both waiver forms if you have not already done so for this calendar year.
         </p>
         <ol>
           <li><a id="waiverA" href="https://docs.google.com/document/d/1sXZhdfVdP9XuHrxpnfPpmX7cc_7qufwyuFZ9bzW3b0Y/view?tab=t.0" target="_blank" rel="noopener">City of Newark Waiver Form</a></li>
-          <li><a id="waiverB" href="https://drive.google.com/file/u/1/d/1a65lmS7rAJBmiO2hR0xzdyUoIWDTKkAq/view" target="_blank" rel="noopener">UFF Waiver Form</a></li>
+          <li><a id="waiverB" href="https://drive.google.com/file/d/1a65lmS7rAJBmiO2hR0xzdyUoIWDTKkAq/view" target="_blank" rel="noopener">UFF Waiver Form</a></li>
         </ol>
         <p>
           You can submit the forms in either of these ways:
@@ -38,15 +41,13 @@
           <li>Print them out and bring them to the event.</li>
           <li>Email signed or scanned copies directly to the coordinator at <a id="coordinatorEmail" href="mailto:man@urbanforestfriends.org">man@urbanforestfriends.org</a>.</li>
         </ol>
-        <p>
-          A family member or friend also wants to attend? They would need to submit a RSVP form as well! One RSVP per person, please!
-        </p>
       </section>
 
       <section class="card">
         <h2>RSVP form</h2>
         <form id="rsvpForm" method="post">
           <input type="hidden" name="action" value="submit">
+
           <div class="honeypot" aria-hidden="true">
             <label>
               Website
@@ -54,36 +55,77 @@
             </label>
           </div>
 
-          <div class="grid two-up">
-            <label>
-              First name *
-              <input type="text" name="first_name" required>
-            </label>
-            <label>
-              Last name *
-              <input type="text" name="last_name" required>
-            </label>
-          </div>
+          <label>
+            RSVP type *
+            <select name="registration_type" id="registrationType" required>
+              <option value="student_parent_pair" selected>Student + 1 parent / guardian pair</option>
+              <option value="general_public">General public</option>
+            </select>
+          </label>
+          <p id="registrationTypeHelp" class="help"></p>
+
+          <section id="studentParentSection" class="conditional-section">
+            <h3>Student + 1 parent / guardian pair</h3>
+            <p class="help">This RSVP holds 2 attendee spots total: one student and one accompanying parent or guardian.</p>
+
+            <div class="grid two-up">
+              <label>
+                Student first name *
+                <input type="text" name="student_first_name" data-student-field required>
+              </label>
+              <label>
+                Student last name *
+                <input type="text" name="student_last_name" data-student-field required>
+              </label>
+            </div>
+
+            <div class="grid two-up">
+              <label>
+                Parent / guardian first name *
+                <input type="text" name="parent_first_name" data-student-field required>
+              </label>
+              <label>
+                Parent / guardian last name *
+                <input type="text" name="parent_last_name" data-student-field required>
+              </label>
+            </div>
+          </section>
+
+          <section id="generalPublicSection" class="conditional-section" hidden>
+            <h3>General public RSVP</h3>
+            <p class="help">This RSVP holds 1 attendee spot.</p>
+
+            <div class="grid two-up">
+              <label>
+                First name *
+                <input type="text" name="public_first_name" data-public-field>
+              </label>
+              <label>
+                Last name *
+                <input type="text" name="public_last_name" data-public-field>
+              </label>
+            </div>
+
+            <fieldset>
+              <legend>I am a… *</legend>
+              <label class="choice"><input type="radio" name="public_participant_type" value="Student" data-public-field> Student (age 14+)</label>
+              <label class="choice"><input type="radio" name="public_participant_type" value="Adult" data-public-field> Adult</label>
+            </fieldset>
+          </section>
 
           <div class="grid two-up">
-            <label>
-              Non-school email address *
-              <input type="email" name="email" required>
+            <label id="contactEmailLabel">
+              Parent / guardian email address *
+              <input type="email" name="contact_email" id="contactEmail" required>
             </label>
             <label>
               Confirm your email address *
-              <input type="email" name="email_confirm" required>
+              <input type="email" name="contact_email_confirm" id="contactEmailConfirm" required>
             </label>
           </div>
 
-          <fieldset>
-            <legend>I am a… *</legend>
-            <label class="choice"><input type="radio" name="participant_type" value="Student" required> Student (age 14+)</label>
-            <label class="choice"><input type="radio" name="participant_type" value="Adult" required> Adult</label>
-          </fieldset>
-
-          <label>
-            Organization / School
+          <label id="organizationSchoolLabel">
+            Student school / organization
             <input type="text" name="organization_school">
           </label>
 
@@ -98,8 +140,9 @@
           <fieldset>
             <legend>How would you like to submit the waiver forms? *</legend>
             <label class="choice"><input type="radio" name="waiver_submission" value="willBring" required> I will print them out physically and bring them to the event</label>
-            <label class="choice"><input type="radio" name="waiver_submission" value="electronic" required> I will sign them digitally (or scan a copy) and send them to organizer at man@urbanforestfriends.org</label>
-            <label class="choice"><input type="radio" name="waiver_submission" value="noNeed" required> I have previous attended an UFF tree planting at Newark and have signed both forms in the calendar year of 2026. I do not need to sign again</label>
+            <label class="choice"><input type="radio" name="waiver_submission" value="electronic" required> I will sign them digitally (or scan a copy) and send them to the organizer</label>
+            <label class="choice"><input type="radio" name="waiver_submission" value="noNeed" required> I already signed both forms for a 2026 UFF Newark event and do not need to sign again</label>
+            <label class="choice"><input type="radio" name="waiver_submission" value="needForm" required> I need the organizer to provide paper forms at the event</label>
           </fieldset>
 
           <label>
@@ -115,7 +158,7 @@
           <p class="help">
             After you submit, you’ll be taken to a confirmation page. You will also receive an email with a self-cancel link.
           </p>
-          
+
           <div id="formMessage" class="form-message" role="alert" aria-live="polite"></div>
           <button id="submitButton" type="submit">Submit RSVP</button>
         </form>
