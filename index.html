@@ -14,33 +14,20 @@
           <img src="uffLogo.png" alt="Urban Forest Friends" class="hero-image">
         </a>
         <h1 id="eventTitle">Durham Elementary Tree Planting</h1>
-        <p id="eventMeta" class="muted">Saturday, May 9, 2026 · 9:00 AM to 12:00 PM • Durham Elementary, Newark, CA</p>
+        <p id="eventMeta" class="muted">Saturday, May 9, 2026 · 9:00 AM to 12:00 PM • Durham Elementary, Fremont, CA</p>
         <div id="statusBanner" class="status-banner">RSVP to plant trees with us!</div>
       </section>
 
       <section class="card">
+        <p>Come plant trees at your school! Urban Forest Friends will be working with the City of Fremont and FUSD to plant thirty-four (34) going into Durham Elementary School.</p>
+        <p>This is a great opportunity for you and your child to learn how to properly plant trees, help your community, and fight climate change.</p>
+        <p>Your child must be in 3rd, 4th or 5th grade to volunteer.</p>
+        <p>Limit is one child per parent.</p>
         <h2>Important</h2>
         <p>
           We are prioritizing Durham Elementary school families first. A school-family RSVP covers
           <strong>exactly one student and one parent or guardian</strong>. General-public RSVP can be opened later if space remains.
         </p>
-        <p id="registrationModeNotice" class="notice-box notice-info">
-          School families are being prioritized right now.
-        </p>
-        <p>
-          To participate, you must complete both waiver forms if you have not already done so for this calendar year.
-        </p>
-        <ol>
-          <li><a id="waiverA" href="https://docs.google.com/document/d/1sXZhdfVdP9XuHrxpnfPpmX7cc_7qufwyuFZ9bzW3b0Y/view?tab=t.0" target="_blank" rel="noopener">City of Newark Waiver Form</a></li>
-          <li><a id="waiverB" href="https://drive.google.com/file/d/1a65lmS7rAJBmiO2hR0xzdyUoIWDTKkAq/view" target="_blank" rel="noopener">UFF Waiver Form</a></li>
-        </ol>
-        <p>
-          You can submit the forms in either of these ways:
-        </p>
-        <ol>
-          <li>Print them out and bring them to the event.</li>
-          <li>Email signed or scanned copies directly to the coordinator at <a id="coordinatorEmail" href="mailto:man@urbanforestfriends.org">man@urbanforestfriends.org</a>.</li>
-        </ol>
       </section>
 
       <section class="card">
@@ -58,15 +45,14 @@
           <label>
             RSVP type *
             <select name="registration_type" id="registrationType" required>
-              <option value="student_parent_pair" selected>Student + 1 parent / guardian pair</option>
-              <option value="general_public">General public</option>
+              <option value="student_parent_pair" selected>Student + 1 Parent / Guardian Pair</option>
+              <option value="general_public">General Public (not available currently)</option>
             </select>
           </label>
           <p id="registrationTypeHelp" class="help"></p>
 
           <section id="studentParentSection" class="conditional-section">
             <h3>Student + 1 parent / guardian pair</h3>
-            <p class="help">This RSVP holds 2 attendee spots total: one student and one accompanying parent or guardian.</p>
 
             <div class="grid two-up">
               <label>
@@ -93,7 +79,6 @@
 
           <section id="generalPublicSection" class="conditional-section" hidden>
             <h3>General public RSVP</h3>
-            <p class="help">This RSVP holds 1 attendee spot.</p>
 
             <div class="grid two-up">
               <label>
@@ -125,7 +110,7 @@
           </div>
 
           <label id="organizationSchoolLabel">
-            Student school / organization
+            Student's school
             <input type="text" name="organization_school">
           </label>
 
@@ -138,11 +123,23 @@
           </fieldset>
 
           <fieldset>
+            <p>
+              To participate, you must complete both waiver forms.
+            </p>
+            <ol>
+              <li><a id="waiverA" href="https://drive.google.com/file/u/1/d/1FSSLzyFpnLkWOJS1dmImxsIDv0Qq01D7/view" target="_blank" rel="noopener">City of Fremont Waiver Form (required)</a></li>
+              <li><a id="waiverB" href="https://drive.google.com/file/d/1a65lmS7rAJBmiO2hR0xzdyUoIWDTKkAq/view" target="_blank" rel="noopener">UFF Waiver Form (if you have not already done so for this calendar year)</a></li>
+            </ol>
+            <p>
+              You can submit the forms in either of these ways:
+            </p>
+            <ol>
+              <li>Print them out and bring them to the event.</li>
+              <li>Email signed or scanned copies directly to the coordinator at <a id="coordinatorEmail" href="mailto:man@urbanforestfriends.org">man@urbanforestfriends.org</a>.</li>
+            </ol>
             <legend>How would you like to submit the waiver forms? *</legend>
             <label class="choice"><input type="radio" name="waiver_submission" value="willBring" required> I will print them out physically and bring them to the event</label>
             <label class="choice"><input type="radio" name="waiver_submission" value="electronic" required> I will sign them digitally (or scan a copy) and send them to the organizer</label>
-            <label class="choice"><input type="radio" name="waiver_submission" value="noNeed" required> I already signed both forms for a 2026 UFF Newark event and do not need to sign again</label>
-            <label class="choice"><input type="radio" name="waiver_submission" value="needForm" required> I need the organizer to provide paper forms at the event</label>
           </fieldset>
 
           <label>
