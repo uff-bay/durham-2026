@@ -9,10 +9,21 @@
   const waiverA = document.getElementById('waiverA');
   const waiverB = document.getElementById('waiverB');
   const coordinatorEmail = document.getElementById('coordinatorEmail');
-  const BLOCKED_EMAIL_DOMAINS = [
-    'newarkunified.org',
-    'fusdk12.net'
-  ];
+  const registrationModeNotice = document.getElementById('registrationModeNotice');
+  const registrationType = document.getElementById('registrationType');
+  const registrationTypeHelp = document.getElementById('registrationTypeHelp');
+  const studentParentSection = document.getElementById('studentParentSection');
+  const generalPublicSection = document.getElementById('generalPublicSection');
+  const generalPublicOption = registrationType ? registrationType.querySelector('option[value="general_public"]') : null;
+  const contactEmailLabel = document.getElementById('contactEmailLabel');
+  const organizationSchoolLabel = document.getElementById('organizationSchoolLabel');
+  const contactEmail = document.getElementById('contactEmail');
+  const contactEmailConfirm = document.getElementById('contactEmailConfirm');
+
+  let allowGeneralPublic = false;
+  const blockedDomains = Array.isArray(config.blockedEmailDomains)
+    ? config.blockedEmailDomains.map((domain) => String(domain || '').trim().toLowerCase()).filter(Boolean)
+    : ['newarkunified.org', 'fusdk12.net'];
 
   if (!form) {
     return;
@@ -27,23 +38,43 @@
 
   form.action = config.webAppUrl;
 
+  registrationType.addEventListener('change', () => {
+    updateRegistrationUi();
+    formMessage.textContent = '';
+  });
+
   form.addEventListener('submit', (event) => {
     formMessage.textContent = '';
 
-    const email = String(form.email.value || '').trim().toLowerCase();
-    const emailConfirm = String(form.email_confirm.value || '').trim().toLowerCase();
+    const selectedType = registrationType.value;
+    const email = String(contactEmail.value || '').trim().toLowerCase();
+    const emailConfirm = String(contactEmailConfirm.value || '').trim().toLowerCase();
+
+    if (!selectedType) {
+      event.preventDefault();
+      formMessage.textContent = 'Please choose an RSVP type.';
+      registrationType.focus();
+      return;
+    }
+
+    if (selectedType === 'general_public' && !allowGeneralPublic) {
+      event.preventDefault();
+      formMessage.textContent = 'General-public RSVP is not open yet. Please check back later.';
+      registrationType.focus();
+      return;
+    }
 
     if (email !== emailConfirm) {
       event.preventDefault();
       formMessage.textContent = 'Your email address and confirmation email address must match.';
-      form.email_confirm.focus();
+      contactEmailConfirm.focus();
       return;
     }
 
     if (isBlockedEmail(email)) {
       event.preventDefault();
       formMessage.textContent = 'School email addresses are not allowed. Please use a personal email.';
-      form.email.focus();
+      contactEmail.focus();
       return;
     }
 
@@ -51,7 +82,71 @@
     submitButton.textContent = 'Submitting…';
   });
 
+  updateRegistrationUi();
   loadStatus();
+
+  function updateRegistrationUi() {
+    const selectedType = registrationType.value || 'student_parent_pair';
+    const isStudentPair = selectedType === 'student_parent_pair';
+
+    studentParentSection.hidden = !isStudentPair;
+    generalPublicSection.hidden = isStudentPair;
+
+    toggleGroup(studentParentSection, '[data-student-field]', isStudentPair);
+    toggleGroup(generalPublicSection, '[data-public-field]', !isStudentPair);
+
+    if (!allowGeneralPublic && generalPublicOption) {
+      generalPublicOption.disabled = true;
+      if (selectedType === 'general_public') {
+        registrationType.value = 'student_parent_pair';
+      }
+    } else if (generalPublicOption) {
+      generalPublicOption.disabled = false;
+    }
+
+    const actualSelectedType = registrationType.value || 'student_parent_pair';
+    const actualStudentPair = actualSelectedType === 'student_parent_pair';
+
+    studentParentSection.hidden = !actualStudentPair;
+    generalPublicSection.hidden = actualStudentPair;
+    toggleGroup(studentParentSection, '[data-student-field]', actualStudentPair);
+    toggleGroup(generalPublicSection, '[data-public-field]', !actualStudentPair);
+
+    if (actualStudentPair) {
+      contactEmailLabel.firstChild.textContent = 'Parent / guardian email address *';
+      organizationSchoolLabel.firstChild.textContent = 'Student school / organization';
+      registrationTypeHelp.textContent = allowGeneralPublic
+        ? 'Use this option for one student and one accompanying parent or guardian only.'
+        : 'Use this option now. General-public RSVP is currently closed.';
+    } else {
+      contactEmailLabel.firstChild.textContent = 'Email address *';
+      organizationSchoolLabel.firstChild.textContent = 'Organization / school';
+      registrationTypeHelp.textContent = 'Use this option for one attendee from the general public.';
+    }
+  }
+
+  function toggleGroup(section, selector, enabled) {
+    section.querySelectorAll(selector).forEach((field) => {
+      const tagName = field.tagName.toLowerCase();
+      const type = (field.getAttribute('type') || '').toLowerCase();
+      field.disabled = !enabled;
+
+      if (type === 'radio') {
+        field.required = enabled;
+        if (!enabled) {
+          field.checked = false;
+        }
+        return;
+      }
+
+      if (tagName === 'input' || tagName === 'select' || tagName === 'textarea') {
+        field.required = enabled;
+        if (!enabled) {
+          field.value = '';
+        }
+      }
+    });
+  }
 
   function loadStatus() {
     const callbackName = `__rsvpStatus_${Date.now()}_${Math.floor(Math.random() * 1000000)}`;
@@ -99,28 +194,41 @@
       coordinatorEmail.textContent = payload.coordinator_email;
     }
 
+    allowGeneralPublic = Boolean(payload.allow_general_public);
+    if (registrationModeNotice) {
+      registrationModeNotice.textContent = payload.registration_mode_message || '';
+      registrationModeNotice.className = allowGeneralPublic ? 'notice-box notice-ok' : 'notice-box notice-info';
+    }
+
     const openSpots = Number(payload.open_guaranteed_spots || 0);
     const confirmedCount = Number(payload.confirmed_count || 0);
     const waitlistCount = Number(payload.waitlist_count || 0);
     const capacity = Number(payload.guaranteed_capacity || 0);
 
+    const modeSuffix = allowGeneralPublic
+      ? 'General-public RSVP is currently open.'
+      : 'Student + parent pairs are being prioritized right now.';
+
     if (openSpots > 0) {
       statusBanner.className = 'status-banner ok';
-      statusBanner.textContent = `${openSpots} guaranteed ${openSpots === 1 ? 'spot is' : 'spots are'} still available. ${confirmedCount} of ${capacity} guaranteed spots are filled.`;
+      statusBanner.textContent = `${openSpots} attendee ${openSpots === 1 ? 'spot is' : 'spots are'} still available. ${confirmedCount} of ${capacity} attendee spots are filled. ${modeSuffix}`;
+      updateRegistrationUi();
       return;
     }
 
     statusBanner.className = 'status-banner waitlist';
-    statusBanner.textContent = `All guaranteed spots are currently full. You will join the waitlist. Current waitlist size: ${waitlistCount}.`;
+    statusBanner.textContent = `All guaranteed spots are currently full. New RSVPs will join the waitlist. Current waitlist size: ${waitlistCount} attendee ${waitlistCount === 1 ? 'spot' : 'spots'}. ${modeSuffix}`;
+    updateRegistrationUi();
   }
 
   function showLoadError() {
     statusBanner.className = 'status-banner';
     statusBanner.textContent = 'RSVP to plant trees with Urban Forest Friends!';
+    updateRegistrationUi();
   }
 
   function isBlockedEmail(email) {
     const domain = email.split('@')[1]?.toLowerCase();
-    return BLOCKED_EMAIL_DOMAINS.includes(domain);
+    return blockedDomains.includes(domain);
   }
 })();
