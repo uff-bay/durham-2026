@@ -1,3 +1,3 @@
 window.RSVP_CONFIG = {
-  webAppUrl: 'https://script.google.com/macros/s/AKfycbwVzaVovq8UF-kbZvg2C4jIL37PaQgGvaQLaBtMAwNbF9LyNqJktysaY4m01Tf2SanU/exec',
+  webAppUrl: 'https://script.google.com/macros/s/AKfycbzLkDoSRmUmqFfF-gZdrJhxUi03guO6gK7ua_wqF5Lu6cnTxeGcDj4Kzgmiheq4fS7-/exec',
 };
