@@ -116,12 +116,12 @@
       contactEmailLabel.firstChild.textContent = 'Parent / guardian email address *';
       organizationSchoolLabel.firstChild.textContent = 'Student school / organization';
       registrationTypeHelp.textContent = allowGeneralPublic
-        ? 'Use this option for one student and one accompanying parent or guardian only.'
-        : 'Use this option now. General-public RSVP is currently closed.';
+        ? 'Only one parent/guardian for one child.'
+        : 'Only one parent/guardian for one child.';
     } else {
       contactEmailLabel.firstChild.textContent = 'Email address *';
       organizationSchoolLabel.firstChild.textContent = 'Organization / school';
-      registrationTypeHelp.textContent = 'Use this option for one attendee from the general public.';
+      registrationTypeHelp.textContent = '';
     }
   }
 
